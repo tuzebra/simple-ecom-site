@@ -3,8 +3,8 @@
 // the url change caused by the user clicking the back or forward button in the browser
 // or by calling the "goto" function
 
-import { once } from '../utils/function';
-import { getRandomStringId } from '../utils/string';
+import { once } from '@/utils/function';
+import { getRandomStringId } from '@/utils/string';
 
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////

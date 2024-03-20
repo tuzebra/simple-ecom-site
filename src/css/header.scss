@@ -1,0 +1,11 @@
+header{
+  nav{
+    a{
+      padding: 0.2rem 0;
+      border-bottom: 2px solid transparent;
+      &.active{
+        border-bottom-color: #747bff;
+      }
+    }
+  }
+}

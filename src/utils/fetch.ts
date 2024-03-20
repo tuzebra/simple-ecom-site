@@ -1,6 +1,6 @@
 // this file contains some useful "fetch" and api call utilities
 
-import { getRandomStringId } from './string';
+import { getRandomStringId } from '@/utils/string';
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
 

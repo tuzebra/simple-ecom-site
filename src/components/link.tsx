@@ -1,5 +1,5 @@
 import { useCallback, type ComponentPropsWithoutRef } from 'react';
-import { goto, isSamePath } from '../utils/url';
+import { goto, isSamePath } from '@/utils/url';
 
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////

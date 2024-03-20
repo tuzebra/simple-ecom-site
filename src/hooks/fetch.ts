@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
-import { cacheFetch, type CacheRequestInit, type FetchResponse } from '../utils/fetch';
-import { getRandomStringId } from '../utils/string';
+import { cacheFetch, type CacheRequestInit, type FetchResponse } from '@/utils/fetch';
+import { getRandomStringId } from '@/utils/string';
 
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////

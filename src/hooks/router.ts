@@ -2,7 +2,7 @@
 // and because it listens to the event of url change, so the URL stage is always up to date.
 
 import { useState, useEffect, useMemo } from 'react';
-import { onUrlChange, getCurrentUrl } from '../utils/url';
+import { onUrlChange, getCurrentUrl } from '@/utils/url';
 
 
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
