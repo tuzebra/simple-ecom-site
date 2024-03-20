@@ -47,3 +47,12 @@ This project follows a specific structure to organize the codebase. Here is a br
 
 - `const.ts`: This file contains all the constants used in the application.
 
+## About the State management
+
+This React project doesn't heavily rely on a global state management system. Instead, it utilizes the website URL as the state, following the conventional approach of most websites. This allows us to copy the URL at any moment to reopen the page, maintaining the exact same state as when we left it. This idea is important which a "shoping" website.
+
+Some example urls:
+- http://localhost:5173/category/smartphones
+- http://localhost:5173/search?q=bag
+- http://localhost:5173/?sort=price_asc
+- http://localhost:5173/?page=3&sort=price_asc
