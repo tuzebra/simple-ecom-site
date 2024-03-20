@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { cacheFetch, type CacheRequestInit, type FetchResponse } from '../utils/fetch';
 import { getRandomStringId } from '../utils/string';
 
@@ -50,9 +50,11 @@ export const useCacheFetch = <ExpectedDataType>(url: string): UseCacheFetchRetur
     async function fetchData() {
       const response: FetchResponse<ExpectedDataType> = await cacheFetch(url, {...options, id: fetchIdRef.current});
       setLoading(false);
+
       // check if the response is the result of the last fetch call
       if(fetchIdRef.current === response.id){
         setResponse(response);
+
         // if we're using an assumption response data before,
         // then need to check if the assumption is correct
         // if it's not correct, then let the outer component know
@@ -61,9 +63,11 @@ export const useCacheFetch = <ExpectedDataType>(url: string): UseCacheFetchRetur
             setWrongAssumption((currentValue) => currentValue + 1);
           }
         }
+
       }
     }
     fetchData();
+
   }, [url]);
 
   return {loading, response, execute, wrongAssumption};

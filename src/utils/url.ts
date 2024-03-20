@@ -15,6 +15,9 @@ type URLSubscriberRecord = {
   [key: string]: URLSubscriberHandlerFunction;
 }
 
+
+//////////////////////// SCOPED VARIABLES ////////////////////////
+
 const subscribers: URLSubscriberRecord = {};
 
 
