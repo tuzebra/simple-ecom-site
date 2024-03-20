@@ -4,6 +4,7 @@
 // or by calling the "goto" function
 
 import { once } from '../utils/function';
+import { getRandomStringId } from '../utils/string';
 
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
@@ -27,7 +28,7 @@ const subscribers: URLSubscriberRecord = {};
 export const onUrlChange = (subscriber: URLSubscriberHandlerFunction) => {
 
   // generate a unique id for the subscriber
-  const id = Math.random().toString(36).substring(7);
+  const id = getRandomStringId();
   subscribers[id] = subscriber;
 
   // need to return a function to unsubscribe

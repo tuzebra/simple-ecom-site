@@ -1,9 +1,10 @@
 // this file contains some useful "fetch" and api call utilities
 
+import { getRandomStringId } from './string';
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
 
-export type QueryOptions = {[key: string]: string};
+export type QueryOptions = {[key: string]: string | string[] | number | number[]};
 
 export type CacheRequestInit = RequestInit & {
   id?: string; // this id is used to identify the fetch call
@@ -14,7 +15,7 @@ export type FetchResponse<DataType> = {
   id: string; // unique id to identify the fetch call
   data?: DataType;
   error?: unknown;
-  success: true | false;
+  success?: boolean;
   message?: string;
 }
 
@@ -62,7 +63,7 @@ export const toQueryString = (queryOptions: QueryOptions = {}): string => {
  */
 export const cacheFetch = async <ExpectedDataType> (url = '', options: CacheRequestInit = {}): Promise<FetchResponse<ExpectedDataType>> => {
 
-  const { id = Math.random().toString(36).substring(7) } = options;
+  const { id = getRandomStringId() } = options;
 
   // append the query string to the url
   if(options.queryOptions){
