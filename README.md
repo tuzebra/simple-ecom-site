@@ -4,7 +4,11 @@
 
 **Requisite: NodeJS version 18+**
 
-From the _root_ for this project, run the following command:
+1. In the _root_ for this project, copy the file `.env.example` into new file named `.env`
+
+By default, the value of `VITE_API_DELAY = 1000`, causing a delay of 1 second for each API call (primarily for testing purposes to display the "loading" element). You have the freedom to adjust it by setting `VITE_API_DELAY = 0` in order to eliminate the delay.
+
+2. Then from terminal, run the following command:
 
 ```bash
 # using npm
@@ -12,14 +16,14 @@ npm install
 npm run dev
 ```
 
-then the command line will show something like this
+3. The command line will show something like this
 ```bash
  ➜  Local:   http://localhost:5173/
  ➜  Network: use --host to expose
  ➜  press h + enter to show help
 ```
 
-You can open that link with browser to explore the website.
+Now you can open that link with browser to explore the website.
 
 ## Project Structure
 
