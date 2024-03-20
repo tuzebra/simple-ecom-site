@@ -1,7 +1,11 @@
 // this file contains some useful "fetch" and api call utilities
 
+
+//////////////////////// TYPE DEFINITIONS ////////////////////////
+
 export type QueryOptions = {[key: string]: string};
-export type CustomRequestInit = RequestInit & {
+
+export type CacheRequestInit = RequestInit & {
   id?: string; // this id is used to identify the fetch call
   queryOptions?: QueryOptions;
 }
@@ -14,13 +18,24 @@ export type FetchResponse<DataType> = {
   message?: string;
 }
 
-type ResolveFunction = (value: unknown) => void;
+export type ResolveFunction = (value: unknown) => void;
+
+
+//////////////////////// SCOPED VARIABLES ////////////////////////
 
 // this variable used to cache the response of the "GET" fetch call, based on the url
 const cacheGETResponseByUrl: {[url: string]: FetchResponse<unknown>} = {};
 
 const fetchingPromise: {[url: string]: ResolveFunction[]} = {};
 
+
+//////////////////////// FUNCTIONS ////////////////////////
+
+/**
+ * Converts an object of query options into a query string.
+ * @param queryOptions - The object containing the query options.
+ * @returns The generated query string.
+ */
 export const toQueryString = (queryOptions: QueryOptions = {}): string => {
   if(typeof queryOptions !== 'object'){
     return '';
@@ -38,7 +53,14 @@ export const toQueryString = (queryOptions: QueryOptions = {}): string => {
   return strParts.join('&');
 }
 
-export const cacheFetch = async <ExpectedDataType> (url = '', options: CustomRequestInit = {}): Promise<FetchResponse<ExpectedDataType>> => {
+/**
+ * Fetches data from a specified URL and caches the response for subsequent requests.
+ * @param url - The URL to fetch data from.
+ * @param options - Additional options for the fetch request.
+ * @returns A promise that resolves to a FetchResponse object containing the fetched data.
+ * @template ExpectedDataType - The expected data type of the fetched data.
+ */
+export const cacheFetch = async <ExpectedDataType> (url = '', options: CacheRequestInit = {}): Promise<FetchResponse<ExpectedDataType>> => {
 
   const { id = Math.random().toString(36).substring(7) } = options;
 

@@ -1,48 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import './App.scss';
 import { useUrl } from './hooks/router';
 import Link from './components/link';
-
-import { cacheFetch } from './utils/fetch';
+import { useCacheFetch, type UseCacheFetchReturnType } from './hooks/fetch';
+import { type CacheRequestInit } from './utils/fetch';
 
 const App = () => {
   const [url] = useUrl();
 
+  const [loading, response, execute]: UseCacheFetchReturnType<any> = useCacheFetch('https://dummyjson.com/products');
+
+  // load product when component was mounted
   useEffect(() => {
-    async function fetchData() {
-      const fetching1 = cacheFetch('https://dummyjson.com/products', {
-        queryOptions: {
-          limit: '10',
-          skip: '10',
-          select: 'title,price',
-          delay: '1000',
-        }
-      });
-
-      const fetching2 = cacheFetch('https://dummyjson.com/products', {
-        queryOptions: {
-          limit: '10',
-          skip: '10',
-          select: 'title,price',
-          delay: '1000',
-        }
-      });
-
-      const fetching3 = cacheFetch('https://dummyjson.com/products', {
-        queryOptions: {
-          limit: '10',
-          skip: '10',
-          select: 'title,price',
-          delay: '1000',
-        }
-      });
-
-      const [r1, r2, r3] = await Promise.all([fetching1, fetching2, fetching3]);
-      console.log(r1, r2, r3);
-
-    }
-    fetchData();
-  }, []);
+    const requestOptions: CacheRequestInit = {
+      queryOptions: {
+        limit: '10',
+        skip: '10',
+        select: 'title,price',
+        delay: '500',
+      }
+    };
+    execute(requestOptions);
+  }, [execute]);
 
   return (
     <>
@@ -53,6 +32,20 @@ const App = () => {
         <Link href="/contact" activeClass='active'>Contact</Link>
         <Link href="/products" activeClass='active'>Products</Link>
       </div>
+      {loading && <div>Loading...</div>}
+      {response?.success && response?.data && (
+        <div>
+          <h1>Products</h1>
+          <ul>
+            {response.data.products.map((product: any) => (
+              <li key={product.id}>
+                <h2>{product.title}</h2>
+                <p>{product.price}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </>
   );
 }
