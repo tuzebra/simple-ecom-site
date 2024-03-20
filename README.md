@@ -19,7 +19,7 @@ then the command line will show something like this
  ➜  press h + enter to show help
 ```
 
-You can open that link with browser to explode the website.
+You can open that link with browser to explore the website.
 
 ## Project Structure
 
@@ -42,3 +42,4 @@ This project follows a specific structure to organize the codebase. Here is a br
 - `utils/`: This directory contains utility functions that are used throughout the application.
 
 - `const.ts`: This file contains all the constants used in the application.
+
