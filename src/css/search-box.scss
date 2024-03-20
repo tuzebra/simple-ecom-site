@@ -1,0 +1,27 @@
+#search-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  form{
+    flex-grow: 1;
+    position: relative;
+  }
+  input{
+    width: 100%;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+  }
+  button{
+    position: absolute;
+    right: 3px;
+    top: 10%;
+    height: 82%;
+    border: 0;
+    background: var(--background-color-gray);
+    cursor: pointer;
+    display: none;
+  }
+  form:focus-within button{
+    display: block;
+  }
+}

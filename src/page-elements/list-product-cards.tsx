@@ -16,16 +16,18 @@ type ListProductCardsProps = ComponentPropsWithoutRef<'div'> & {
 
 export const ListProductCards = ({products, totalPage = 0, ...rest}: ListProductCardsProps) => {
   return (
-    <div {...rest}>
-      <div>
+    <div className='list-products' {...rest}>
+      <div className='container'>
         <h1>Products</h1>
-        <div>
+        <ul className='list-products-ul'>
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-      <div>
+      <div className='container'>
         <Pagination totalPage={totalPage} />
       </div>
     </div>

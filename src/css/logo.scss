@@ -1,0 +1,14 @@
+#logo{
+  margin: 1rem;
+  border: 1px solid black;
+  line-height: 1;
+  padding: 0.3rem 0.9rem;
+  border-radius: 2px;
+  span{
+    font-weight: bold;
+    font-family: monospace;
+    letter-spacing: 0.1rem;
+    transform: scaleY(0.7);
+    font-size: 4rem;
+  }
+}

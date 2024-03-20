@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { usePage, useTotalPage, useCategoryId } from '@/hooks/compute';
 import { useFetchProducts } from '@/apis/product';
 import ListProductCards from '@/page-elements/list-product-cards';
+import '@/css/product.scss';
 
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////

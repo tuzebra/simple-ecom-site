@@ -1,0 +1,19 @@
+.list-products{
+  --one-item-min-width: 20rem;
+}
+.list-products-ul{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--one-item-min-width), 1fr));
+  grid-gap: 12px 8px;
+  gap: 12px 8px;
+  padding: 0;
+  margin: 0;
+  li{
+    position: relative;
+    list-style: none;
+    // margin: 1px 0 0;
+    // padding: 2px 6px;
+    align-items: center;
+    min-height: 27px;
+  }
+}

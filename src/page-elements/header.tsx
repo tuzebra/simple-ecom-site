@@ -48,23 +48,34 @@ const MainHeader = () => {
 
   return (
     <header>
-      <div id="logo">HP</div>
-      <nav>
-        <ul>
-          <li><Link href={PATH_PAGE__HOME} activeClass='active'>All</Link></li>
-          {loading && <li><span className='loading'>loading categories...</span></li>}
-          {categories.map((category) => (
-            <li key={category}>
-              <Link href={formatUrl(PATH_PAGE__CATEGORY, {category_id: category})} activeClass='active'>{capitalizeWords(category)}</Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <div id="logo"><span>HP</span></div>
       <div id="search-box">
         <form onSubmit={onSubmit}>
           <input type="text" placeholder="Search..." value={inputSearchValue} onChange={onInputChange} />
+          <button>Search &gt;</button>
         </form>
       </div>
+      <nav>
+        <div className='container'>
+          <section>
+            <ul>
+              <li><Link href={PATH_PAGE__HOME} activeClass='active'>All</Link></li>
+              {loading && <li><span className='loading'>loading categories...</span></li>}
+              {categories.map((category) => (
+                <li key={category}>
+                  <Link href={formatUrl(PATH_PAGE__CATEGORY, {category_id: category})} activeClass='active'>{capitalizeWords(category)}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+        <label>
+          <input type='checkbox' />
+          <span>show more</span>
+          <span>show less</span>
+          <i>^</i>
+        </label>
+      </nav>
     </header>
   );
 }

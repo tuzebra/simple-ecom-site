@@ -2,6 +2,7 @@ import { type ComponentPropsWithoutRef } from 'react';
 import { useUrl } from '@/hooks/router';
 import { urlToRelativeString } from '@/utils/url';
 import Link from '@/components/link';
+import '@/css/pagination.scss';
 
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
@@ -21,11 +22,15 @@ export const Pagination = ({totalPage, ...rest}: PaginationProps) => {
   }
 
   return (
-    <div {...rest}>
-      { /* loop to create the pagination links from 0 to totalPage */ }
-      {Array.from({length: totalPage}).map((_, i) => (
-        <Link key={i} href={urlToRelativeString(url, {page: i > 0 ? i+1 : null})} activeClass='active' activeFactors={['page']}>{i+1}</Link>
-      ))}
+    <div className='pagination' {...rest}>
+      <ul className='pagination-ul'>
+        { /* loop to create the pagination links from 0 to totalPage */ }
+        {Array.from({length: totalPage}).map((_, i) => (
+          <li key={i}>
+            <Link href={urlToRelativeString(url, {page: i > 0 ? i+1 : null})} activeClass='active' activeFactors={['page']}>{i+1}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,57 +1,8 @@
-:root {
-  --background-color: #242424;
-  --text-color: rgba(255, 255, 255, 0.87);
-  --link-color: #646cff;
-  --link-hover-color: #535bf2;
+@import url('./_variable.scss');
+@import url('./common.scss');
+@import url('./form.scss');
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: var(--text-color);
-  background-color: var(--background-color);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: var(--link-color);
-  text-decoration: inherit;
-}
-a:hover {
-  color: var(--link-hover-color);
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  font-size: .875rem;
-  line-height: 1.571;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-.container{
-  padding: 0 1.25rem;
-  box-sizing: border-box;
-}
-
-.list{
-  position: relative;
-  margin: 0 -1.25rem 0;
-  display: grid;
-  align-items: stretch;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 
 @media (prefers-color-scheme: light) {
   :root {
