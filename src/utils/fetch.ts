@@ -1,6 +1,6 @@
 // this file contains some useful "fetch" and api call utilities
 
-import { getRandomStringId } from '@/utils/string';
+import { getRandomStringId, encodeURIComponentFix } from '@/utils/string';
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
 
@@ -45,11 +45,11 @@ export const toQueryString = (queryOptions: QueryOptions = {}): string => {
   for(const [key, value] of Object.entries(queryOptions)){
     if(Array.isArray(value)){
       for(let i=0;i<value.length;i++){
-        strParts.push(`${key}[]=${encodeURIComponent(value[i]).replace(/%20/g,'+')}`);
+        strParts.push(`${key}[]=${encodeURIComponentFix(value[i])}`);
       }
       continue;
     }
-    strParts.push(`${key}=${encodeURIComponent(value).replace(/%20/g,'+')}`);
+    strParts.push(`${key}=${encodeURIComponentFix(value)}`);
   }
   return strParts.join('&');
 }

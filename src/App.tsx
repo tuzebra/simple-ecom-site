@@ -18,16 +18,17 @@ const App = () => {
 
   const pathname = usePathname();
 
-  const IS_PRODUCT_LIST  = pathname === PATH_PAGE__HOME || Object.keys(matchUrl(pathname, PATH_PAGE__CATEGORY)).length > 0;
+  const IS_PRODUCT_LIST   = pathname === PATH_PAGE__HOME || Object.keys(matchUrl(pathname, PATH_PAGE__CATEGORY)).length > 0;
+  const IS_PRODUCT_SEARCH = pathname === PATH_PAGE__SEARCH;
 
-  const IS_NOT_FOUND = !IS_PRODUCT_LIST;
+  const IS_NOT_FOUND = !IS_PRODUCT_LIST && !IS_PRODUCT_SEARCH;
 
   return (
     <>
       <MainHeader />
-      {IS_NOT_FOUND     && <NotFoundPage />}
-      {IS_PRODUCT_LIST  && <ProductList />}
-      {pathname === PATH_PAGE__SEARCH && <ProductSearch />}
+      {IS_NOT_FOUND      && <NotFoundPage />}
+      {IS_PRODUCT_LIST   && <ProductList />}
+      {IS_PRODUCT_SEARCH && <ProductSearch />}
     </>
   );
 }

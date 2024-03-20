@@ -77,6 +77,15 @@ export const matchUrl = (str = '', template = ''): {[key: string]: string} => {
   return data;
 }
 
+/**
+ * Encodes a string or number using the `encodeURIComponent` function and replaces all occurrences of `%20` with `+`.
+ * @param str - The string or number to be encoded.
+ * @returns The encoded string.
+ */
+export const encodeURIComponentFix = (str: string|number): string => {
+  return encodeURIComponent(str).replace(/%20/g,'+');
+}
+
 
 //////////////////////// PRIVATE FUNCTIONS ////////////////////////
 

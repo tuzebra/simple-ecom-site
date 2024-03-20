@@ -1,12 +1,15 @@
-import Link                           from '@/components/link';
-import { useQuery                     } from '@/hooks/compute';
+import { useCallback                  } from 'react';
+import Link                             from '@/components/link';
+import { useQuery, usePathname        } from '@/hooks/compute';
 import { useFetchCategories           } from '@/apis/category';
-import { capitalizeWords, formatUrl   } from '@/utils/string';
+import { capitalizeWords, formatUrl, encodeURIComponentFix   } from '@/utils/string';
+import { goto                         } from '@/utils/url';
 import '@/css/header.scss';
 
 import {
   PATH_PAGE__HOME,
   PATH_PAGE__CATEGORY,
+  PATH_PAGE__SEARCH,
 } from '@/const';
 import { useEffect } from 'react';
 
@@ -24,6 +27,20 @@ const MainHeader = () => {
 
   const categories = response?.data || [];
 
+  const onSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if(event.nativeEvent.target instanceof HTMLFormElement){
+      const input = event.nativeEvent.target.querySelector('input');
+      if(input){
+        const value = input.value.trim();
+        if(value){
+          goto(`${PATH_PAGE__SEARCH}?q=${encodeURIComponentFix(value)}`);
+        }
+      }
+    }
+  },
+  []);
+
   return (
     <header>
       <div id="logo">HP</div>
@@ -39,7 +56,9 @@ const MainHeader = () => {
         </ul>
       </nav>
       <div id="search-box">
-        <input type="text" placeholder="Search..." defaultValue={query} />
+        <form onSubmit={onSubmit}>
+          <input type="text" placeholder="Search..." defaultValue={query} />
+        </form>
       </div>
     </header>
   );

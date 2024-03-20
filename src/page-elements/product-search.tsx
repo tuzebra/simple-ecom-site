@@ -14,8 +14,6 @@ const ProductSearch = () => {
 
   const totalPage = useTotalPage(response?.data);
 
-  console.log({loading, response, executeSearchPage, page, totalPage});
-
   // load product when component was mounted
   useEffect(() => {
     executeSearchPage(query, page);
