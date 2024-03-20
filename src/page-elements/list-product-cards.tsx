@@ -18,7 +18,7 @@ export const ListProductCards = ({products, totalPage = 0, ...rest}: ListProduct
   return (
     <div className='list-products' {...rest}>
       <div className='container'>
-        <h1>Products</h1>
+        <Pagination totalPage={totalPage} />
         <ul className='list-products-ul'>
           {products.map((product) => (
             <li key={product.id}>
@@ -26,8 +26,6 @@ export const ListProductCards = ({products, totalPage = 0, ...rest}: ListProduct
             </li>
           ))}
         </ul>
-      </div>
-      <div className='container'>
         <Pagination totalPage={totalPage} />
       </div>
     </div>

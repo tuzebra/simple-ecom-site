@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root{
+  padding-bottom: 2rem;
+}
+
 a {
   font-weight: 500;
   color: var(--link-color);
