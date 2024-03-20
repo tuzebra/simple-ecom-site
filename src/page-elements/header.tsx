@@ -1,9 +1,9 @@
 import { useState, useCallback        } from 'react';
 import Link                             from '@/components/link';
-import { useQuery, usePathname        } from '@/hooks/compute';
+import { useQuery                     } from '@/hooks/compute';
 import { useFetchCategories           } from '@/apis/category';
-import { capitalizeWords, formatUrl, encodeURIComponentFix   } from '@/utils/string';
 import { goto                         } from '@/utils/url';
+import { capitalizeWords, formatUrl, encodeURIComponentFix   } from '@/utils/string';
 import '@/css/header.scss';
 
 import {
@@ -48,7 +48,9 @@ const MainHeader = () => {
 
   return (
     <header>
-      <div id="logo"><span>HP</span></div>
+      <Link href={PATH_PAGE__HOME}>
+        <div id="logo"><span>HP</span></div>
+      </Link>
       <div id="search-box">
         <form onSubmit={onSubmit}>
           <input type="text" placeholder="Search..." value={inputSearchValue} onChange={onInputChange} />

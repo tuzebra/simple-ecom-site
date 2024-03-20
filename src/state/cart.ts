@@ -1,0 +1,10 @@
+//////////////////////// TYPE DEFINITIONS ////////////////////////
+
+export type GlobalCartContextStateType = {
+};
+
+
+//////////////////////// EXPORTED VARIABLES ////////////////////////
+
+export const globalCartContextStateDefault = {
+};

@@ -52,6 +52,16 @@ export const usePage = (): number => {
 }
 
 /**
+ * Custom hook to retrieve the sort value from the URL and parse it as a number.
+ * @returns The parsed sort value as a number.
+ */
+export const useSort = (): string => {
+  const [, [sort]] = useUrl(['sort']);
+  // sort should be a string
+  return sort || ''
+}
+
+/**
  * Custom hook to retrieve the query parameter from the URL.
  * @returns The value of the 'q' query parameter, or an empty string if it is not present.
  */
