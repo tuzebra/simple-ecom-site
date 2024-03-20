@@ -22,6 +22,12 @@ export type UseCacheFetchReturnType<ExpectedDataType> = {
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
 
 
+/**
+ * Custom hook for fetching data with caching and assumption checking.
+ * @template ExpectedDataType - The expected data type of the response.
+ * @param {string} url - The URL to fetch the data from.
+ * @returns {UseCacheFetchReturnType<ExpectedDataType>} An object containing the loading state, response data, execute function, and wrong assumption count.
+ */
 export const useCacheFetch = <ExpectedDataType>(url: string): UseCacheFetchReturnType<ExpectedDataType> => {
 
   const fetchIdRef = useRef<string>('');
@@ -29,6 +35,12 @@ export const useCacheFetch = <ExpectedDataType>(url: string): UseCacheFetchRetur
   const [response, setResponse] = useState<FetchResponse<ExpectedDataType> | null>(null);
   const [wrongAssumption, setWrongAssumption] = useState(0);
 
+  /**
+   * Executes the fetch request with caching and assumption checking.
+   * @param {CacheRequestInit} options - The options for the fetch request.
+   * @param {ExpectedDataType | null} assumptionResponseData - The assumption response data to use.
+   * @param {Function | undefined} checkAssumptionCorrect - The function to check if the assumption is correct (match with real response data).
+   */
   const execute = useCallback<UseCacheFetchExecuteFunction<ExpectedDataType>>((options: CacheRequestInit, assumptionResponseData, checkAssumptionCorrect) => {
 
     // before fetching the data, just generate an id for the fetch call

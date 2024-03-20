@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { type CacheRequestInit } from '../utils/fetch';
 import { useCacheFetch, type UseCacheFetchReturnType, type UseCacheFetchExecuteFunction } from '../hooks/fetch';
+import { type PaginationResponseData } from './common';
 
 
 //////////////////////// CONFIGS ////////////////////////
@@ -26,11 +27,8 @@ export type Product = {
   images?: string[]; // array of string values of the image urls
 };
 
-type ProductFetchResponseData = {
-  limit: number;
+type ProductFetchResponseData = PaginationResponseData & {
   products: Product[];
-  skip: number;
-  total: number;
 }
 
 type UseFetchProductsExecutePageFunction = (page: number) => void;
@@ -42,9 +40,17 @@ type UseFetchProductsReturnType = UseCacheFetchReturnType<ProductFetchResponseDa
 
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
 
+/**
+ * Custom hook for fetching products.
+ * @returns An object containing loading state, response data, and functions for executing the fetch and executing a specific page.
+ */
 export const useFetchProducts = (): UseFetchProductsReturnType => {
   const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductFetchResponseData>(`${import.meta.env.VITE_API_ENDPOINT}${API_GET_PRODUCTS}`);
 
+  /**
+   * Executes the fetch for a specific page of products.
+   * @param page - The page number to fetch (starting from 1).
+   */
   const executePage = useCallback<UseFetchProductsExecutePageFunction>((page: number) => {
     // the page should start from 1
     page = Math.max(1, page);
