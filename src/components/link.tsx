@@ -6,6 +6,7 @@ import { goto, isSamePath } from '../utils/url';
 
 type AProps = ComponentPropsWithoutRef<'a'> & {
   activeClass?: string; // if the "href" matches the current URL, then add this class as an "active" class
+  activeFactors?: string[]; // the search query string keys to be used to determine if the link is active
 }
 
 
@@ -16,11 +17,12 @@ type AProps = ComponentPropsWithoutRef<'a'> & {
  *
  * @param onClick - The custom click event handler.
  * @param activeClass - The class name to apply when the link is active (matched with the current page url).
+ * @param activeFactors - The search query string keys to be used to determine if the link is active.
  * @param className - The additional class name(s) for the link.
  * @param href - The URL for the link.
  * and other props that can be passed to the <a> tag.
  */
-const Link = ({onClick, activeClass = '', className = '', href = '', ...rest}: AProps) => {
+const Link = ({onClick, activeClass = '', className = '', href = '', activeFactors = [], ...rest}: AProps) => {
 
   // compute the final class name of the <a> tag
   // if the "href" matches the current URL, then add the "active" class
@@ -28,7 +30,7 @@ const Link = ({onClick, activeClass = '', className = '', href = '', ...rest}: A
   if(className){
     finalClassNames.push(className);
   }
-  if(isSamePath(window.location.href, href)){
+  if(isSamePath(window.location.href, href, activeFactors)){
     finalClassNames.push(activeClass);
   }
 

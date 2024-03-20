@@ -59,12 +59,17 @@ export const goto = (url: string) => {
  * Checks if two URLs have the same path.
  * @param href1 - The first URL.
  * @param href2 - The second URL.
+ * @param searchParamsToCheck - The search query string keys to be used to compare two URLs.
  * @returns A boolean indicating whether the paths are the same.
  */
-export const isSamePath = (href1: string, href2: string): boolean => {
+export const isSamePath = (href1: string, href2: string, searchParamsToCheck: string[] = []): boolean => {
   const url1 = new URL(href1);
   const url2 = new URL(`${url1.origin}${href2}`);
-  return url1.pathname === url2.pathname;
+  if(url1.pathname !== url2.pathname){
+    return false;
+  }
+  // all search params need to pass as well
+  return searchParamsToCheck.every(param => url1.searchParams.get(param) === url2.searchParams.get(param));
 }
 
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import './App.scss';
 import { useUrl } from './hooks/router';
 import Link from './components/link';
@@ -9,11 +9,26 @@ import { useFetchProducts, type Product } from './apis/product';
 const App = () => {
   const [url] = useUrl();
 
-  const [page, setPage] = useState(1);
-
   const {loading, response, executePage} = useFetchProducts();
 
-  console.log({loading, response, executePage});
+  // compose the page state from the URL query string
+  const page = useMemo(() => {
+    // the page should start from 1
+    return Math.max(
+      1,
+      parseInt(url.searchParams.get('page') || '1')
+    );
+  }, [url]);
+
+  // calculate the total page from the response data
+  const totalPage = useMemo(() => {
+    if(!response?.data){
+      return 0;
+    }
+    return Math.ceil(response.data.total / response.data.limit);
+  }, [response]);
+
+  console.log({loading, response, executePage, page});
 
   // load product when component was mounted
   useEffect(() => {
@@ -30,7 +45,10 @@ const App = () => {
         <Link href="/products" activeClass='active'>Products</Link>
       </div>
       <div>
-        <a href="#" onClick={() => setPage(v => v+1)}>Page {page}</a>
+        { /* loop to create the pagination links from 0 to totalPage */ }
+        {Array.from({length: totalPage}).map((_, i) => (
+          <Link key={i} href={`/products?page=${i+1}`} activeClass='active' activeFactors={['page']}>{i+1}</Link>
+        ))}
       </div>
       {loading && <div>Loading...</div>}
       {response?.data && (
