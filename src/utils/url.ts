@@ -51,6 +51,7 @@ export const getCurrentUrl = (): URL => new URL(window.location.href);
  * @param url - The URL to navigate to.
  */
 export const goto = (url: string) => {
+  window.scrollTo(0, 0);
   window.history.pushState(null, '', url);
   _triggerAllSubscribers();
 }

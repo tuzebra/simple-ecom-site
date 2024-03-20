@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { usePage, useTotalPage, useCategoryId } from '@/hooks/compute';
-import Pagination from '@/components/pagination';
 import { useFetchProducts } from '@/apis/product';
+import ListProductCards from '@/page-elements/list-product-cards';
 
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
@@ -21,24 +21,8 @@ const ProductList = () => {
 
   return (
     <>
-      <div>
-        <Pagination totalPage={totalPage} />
-      </div>
       {loading && <div>Loading...</div>}
-      {response?.data && (
-        <div>
-          <h1>Products</h1>
-          <ul>
-            {response.data.products.map((product) => (
-              <li key={product.id}>
-                <h2>{product.title}</h2>
-                <p>{product.price}</p>
-                <p>{product.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ListProductCards products={response?.data?.products || []} totalPage={totalPage} />
     </>
   );
 }

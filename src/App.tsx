@@ -12,7 +12,7 @@ import {
   PATH_PAGE__CATEGORY,
   PATH_PAGE__PRODUCT_DETAIL,
   PATH_PAGE__CART,
-} from './const';
+} from '@/const';
 import { matchUrl } from './utils/string';
 
 const App = () => {
