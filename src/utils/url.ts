@@ -72,6 +72,24 @@ export const isSamePath = (href1: string, href2: string, searchParamsToCheck: st
   return searchParamsToCheck.every(param => url1.searchParams.get(param) === url2.searchParams.get(param));
 }
 
+/**
+ * Converts a URL object to a string representation with optional search parameters.
+ * @param url - The URL object to convert.
+ * @param searchParams - Optional search parameters to append to the URL.
+ * @returns The string representation of the URL with the appended search parameters.
+ */
+export const urlToRelativeString = (url: URL, searchParams: {[key: string]: string|number|null} = {}): string => {
+  const urlCopy = new URL(url.toString());
+  for(const [key, value] of Object.entries(searchParams)){
+    if(value === null){
+      urlCopy.searchParams.delete(key);
+      continue;
+    }
+    urlCopy.searchParams.set(key, String(value));
+  }
+  return `${urlCopy.pathname}${urlCopy.search}`;
+}
+
 
 //////////////////////// PRIVATE FUNCTIONS ////////////////////////
 
@@ -92,8 +110,3 @@ const _triggerAllSubscribers = () => {
 once(() => {
   window.addEventListener('popstate', _triggerAllSubscribers);
 })();
-
-interface Window {
-  goto: (url: string) => void;
-}
-window.goto = goto;

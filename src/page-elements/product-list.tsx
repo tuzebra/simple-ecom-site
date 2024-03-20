@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import { usePage, useTotalPage } from '@/hooks/compute';
-import Link from '@/components/link';
+import { usePage, useTotalPage, useCategoryId } from '@/hooks/compute';
+import Pagination from '@/components/pagination';
 import { useFetchProducts } from '@/apis/product';
 
-import { PATH_PAGE__HOME } from '@/const';
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
 
-const ProductListPage = () => {
+const ProductList = () => {
   const page = usePage();
+  const categoryId = useCategoryId();
 
-  const {loading, response, executePage} = useFetchProducts();
+  const {loading, response, executePage} = useFetchProducts({categoryId});
 
   const totalPage = useTotalPage(response?.data);
-
-  console.log({loading, response, executePage, page, totalPage});
 
   // load product when component was mounted
   useEffect(() => {
@@ -24,10 +22,7 @@ const ProductListPage = () => {
   return (
     <>
       <div>
-        { /* loop to create the pagination links from 0 to totalPage */ }
-        {totalPage > 1 && Array.from({length: totalPage}).map((_, i) => (
-          <Link key={i} href={`${PATH_PAGE__HOME}?page=${i+1}`} activeClass='active' activeFactors={['page']}>{i+1}</Link>
-        ))}
+        <Pagination totalPage={totalPage} />
       </div>
       {loading && <div>Loading...</div>}
       {response?.data && (
@@ -48,4 +43,4 @@ const ProductListPage = () => {
   );
 }
 
-export default ProductListPage;
+export default ProductList;

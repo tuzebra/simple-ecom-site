@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import { usePage, useQuery, useTotalPage } from '@/hooks/compute';
-import Link from '@/components/link';
+import Pagination from '@/components/pagination';
 import { useSearchProducts } from '@/apis/product';
 
-import { PATH_PAGE__SEARCH} from '@/const';
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
 
-const ProductSearchPage = () => {
+const ProductSearch = () => {
   const page = usePage();
   const query = useQuery();
 
@@ -25,10 +24,7 @@ const ProductSearchPage = () => {
   return (
     <>
       <div>
-        { /* loop to create the pagination links from 0 to totalPage */ }
-        {totalPage > 1 && Array.from({length: totalPage}).map((_, i) => (
-          <Link key={i} href={`${PATH_PAGE__SEARCH}?page=${i+1}`} activeClass='active' activeFactors={['page']}>{i+1}</Link>
-        ))}
+        <Pagination totalPage={totalPage} />
       </div>
       {loading && <div>Loading...</div>}
       {response?.data && (
@@ -49,4 +45,4 @@ const ProductSearchPage = () => {
   );
 }
 
-export default ProductSearchPage;
+export default ProductSearch;

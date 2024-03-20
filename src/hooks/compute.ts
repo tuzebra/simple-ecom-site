@@ -2,7 +2,9 @@
 
 import { useMemo } from 'react';
 import { useUrl } from '@/hooks/router';
+import { matchUrl } from '@/utils/string';
 import { type PaginationResponseData } from '@/apis/common';
+import { PATH_PAGE__CATEGORY } from '@/const';
 
 
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
@@ -13,7 +15,17 @@ import { type PaginationResponseData } from '@/apis/common';
  */
 export const usePathname = (): string => {
   const [url] = useUrl();
-  return url.pathname
+  return url.pathname;
+}
+
+/**
+ * Custom hook to retrieve the current category ID from the URL.
+ * @returns The current category ID.
+ */
+export const useCategoryId = (): string => {
+  const [url] = useUrl();
+  const {category_id: categoryId = ''} = matchUrl(url.pathname, PATH_PAGE__CATEGORY);
+  return categoryId;
 }
 
 /**

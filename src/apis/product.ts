@@ -5,11 +5,13 @@ import { type CacheRequestInit } from '@/utils/fetch';
 import { useCacheFetch, type UseCacheFetchReturnType } from '@/hooks/fetch';
 import { type PaginationResponseData } from '@/apis/common';
 import { API_ENDPOINT, API_DELAY, NUMBER_OF_PRODUCTS_PER_PAGE } from '@/const';
+import { formatUrl } from '@/utils/string';
 
 
 //////////////////////// CONFIGS ////////////////////////
 
-const API_GET_PRODUCTS = '/products';
+const API_GET_PRODUCTS_ALL = '/products';
+const API_GET_PRODUCTS_OF_A_CATEGORY = '/products/category/:category_id';
 const API_SEARCH_PRODUCTS = '/products/search';
 
 
@@ -50,8 +52,15 @@ type UseSearchProductsReturnType = UseCacheFetchReturnType<ProductFetchResponseD
  * Custom hook for fetching products.
  * @returns An object containing loading state, response data, and functions for executing the fetch and executing a specific page.
  */
-export const useFetchProducts = (): UseFetchProductsReturnType => {
-  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductFetchResponseData>(`${API_ENDPOINT}${API_GET_PRODUCTS}`);
+export const useFetchProducts = ({categoryId = ''}): UseFetchProductsReturnType => {
+
+  const fetchUrl = `${API_ENDPOINT}${
+    categoryId
+      ? formatUrl(API_GET_PRODUCTS_OF_A_CATEGORY, {category_id: categoryId})
+      : API_GET_PRODUCTS_ALL
+    }`;
+
+  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductFetchResponseData>(fetchUrl);
 
   /**
    * Executes the fetch for a specific page of products.
