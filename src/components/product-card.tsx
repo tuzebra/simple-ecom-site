@@ -35,9 +35,9 @@ export const ProductCard = ({product, showThumbnail = true, ...rest}: ProductCar
           {!hasDiscount && (
             <span>{product.price}</span>
           )}
+          <AddToCart product={product} />
         </div>
         <Link href={productDetailLink} className='to-detail-link' />
-        <AddToCart product={product} />
     </div>
   );
 }

@@ -79,6 +79,14 @@
     height: 100%;
   }
   .add-to-cart{
-    position: relative;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    border: 0;
+    padding: 0.5rem 0.6rem;
+    background: var(--border-color);
+    cursor: pointer;
   }
 }
