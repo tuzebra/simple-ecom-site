@@ -1,4 +1,4 @@
-// This file contains the API related functions for fetching the product/product list/...etc.
+// This file contains the API related functions for fetching the category ...etc.
 
 import { useCacheFetch, type UseCacheFetchReturnType } from '@/hooks/fetch';
 import { API_ENDPOINT } from '@/const';

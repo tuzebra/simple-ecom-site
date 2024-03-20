@@ -1,15 +1,17 @@
 import { useState, useCallback        } from 'react';
-import Link                             from '@/components/link';
 import { useQuery                     } from '@/hooks/compute';
 import { useFetchCategories           } from '@/apis/category';
 import { goto                         } from '@/utils/url';
 import { capitalizeWords, formatUrl, encodeURIComponentFix   } from '@/utils/string';
+import Link                             from '@/components/link';
+import CartBadge                        from '@/components/cart-badge';
 import '@/css/header.scss';
 
 import {
   PATH_PAGE__HOME,
   PATH_PAGE__CATEGORY,
   PATH_PAGE__SEARCH,
+  PATH_PAGE__CART,
 } from '@/const';
 import { useEffect } from 'react';
 
@@ -51,12 +53,18 @@ const MainHeader = () => {
       <Link href={PATH_PAGE__HOME}>
         <div id="logo"><span>HP</span></div>
       </Link>
+
       <div id="search-box">
         <form onSubmit={onSubmit}>
           <input type="text" placeholder="Search..." value={inputSearchValue} onChange={onInputChange} />
           <button>Search &gt;</button>
         </form>
       </div>
+
+      <div id="cart-badge-wrap">
+        <CartBadge />
+      </div>
+
       <nav>
         <div className='container'>
           <section>

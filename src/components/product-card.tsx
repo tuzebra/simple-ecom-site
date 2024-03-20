@@ -3,6 +3,7 @@ import { type Product } from '@/apis/product';
 import { PATH_PAGE__PRODUCT_DETAIL } from '@/const';
 import { formatUrl } from '@/utils/string';
 import Link from '@/components/link';
+import AddToCart from '@/components/add-to-cart';
 
 //////////////////////// TYPE DEFINITIONS ////////////////////////
 
@@ -36,6 +37,7 @@ export const ProductCard = ({product, showThumbnail = true, ...rest}: ProductCar
           )}
         </div>
         <Link href={productDetailLink} className='to-detail-link' />
+        <AddToCart product={product} />
     </div>
   );
 }

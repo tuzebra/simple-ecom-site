@@ -2,12 +2,12 @@ import PageTitle from '@/components/page-title';
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
 
-const NotFoundPage = () => {
+const Cart = () => {
   return (
     <div className='container'>
-      <PageTitle title='404 Page not found!' />
+      <PageTitle title='Cart' />
     </div>
   );
 }
 
-export default NotFoundPage;
+export default Cart;
