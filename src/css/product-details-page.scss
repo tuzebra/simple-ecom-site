@@ -1,0 +1,22 @@
+.product-details-page{
+  display: grid;
+  grid-template-columns: 1fr 30rem;
+  grid-gap: 4rem 1.5rem;
+  gap: 4rem 1.5rem;
+  padding: 0;
+  margin: 3rem 0;
+}
+.product-images-carousel{
+  --one-item-min-width: 26rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--one-item-min-width), 1fr));
+  grid-gap: 1.5rem;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0.7rem 0;
+  img{
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+  }
+}

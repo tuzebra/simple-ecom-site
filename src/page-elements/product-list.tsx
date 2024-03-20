@@ -4,6 +4,7 @@ import { capitalizeWords } from '@/utils/string';
 import { useFetchProducts } from '@/apis/product';
 import ListProductCards from '@/page-elements/list-product-cards';
 import PageTitle from '@/components/page-title';
+import LoadingBar from '@/components/loading-bar';
 import '@/css/product.scss';
 
 
@@ -34,7 +35,7 @@ const ProductList = () => {
       <div className='container'>
         <PageTitle title={pageTitle} />
       </div>
-      {loading && <div>Loading...</div>}
+      {loading && <LoadingBar>Loading products...</LoadingBar>}
       <ListProductCards products={response?.data?.products || []} totalPage={totalPage} />
     </>
   );

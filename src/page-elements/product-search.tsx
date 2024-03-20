@@ -3,6 +3,7 @@ import { usePage, useQuery, useTotalPage } from '@/hooks/compute';
 import { useSearchProducts } from '@/apis/product';
 import ListProductCards from '@/page-elements/list-product-cards';
 import PageTitle from '@/components/page-title';
+import LoadingBar from '@/components/loading-bar';
 
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
@@ -37,7 +38,7 @@ const ProductSearch = () => {
       <div className='container'>
         <PageTitle title={pageTitle} />
       </div>
-      {loading && <div>Loading...</div>}
+      {loading && <LoadingBar>Searching products...</LoadingBar>}
       <ListProductCards products={response?.data?.products || []} totalPage={totalPage} />
     </>
   );

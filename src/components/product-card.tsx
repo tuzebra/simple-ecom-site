@@ -7,18 +7,21 @@ import Link from '@/components/link';
 //////////////////////// TYPE DEFINITIONS ////////////////////////
 
 type ProductCardProps = ComponentPropsWithoutRef<'div'> & {
+  showThumbnail?: boolean;
   product: Product;
 }
 
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
 
-export const ProductCard = ({product, ...rest}: ProductCardProps) => {
+export const ProductCard = ({product, showThumbnail = true, ...rest}: ProductCardProps) => {
   const productDetailLink = formatUrl(PATH_PAGE__PRODUCT_DETAIL, {product_id: product.id});
   const hasDiscount = (product?.discountPercentage || 0) > 0;
   return (
     <div className='product-card' {...rest} data-id={product.id}>
-        <img src={product.thumbnail} alt={product.title} />
+        {showThumbnail && (
+          <img src={product.thumbnail} alt={product.title} />
+        )}
         <h2>{product.title}</h2>
         <main>{product.description}</main>
         <div className='price'>

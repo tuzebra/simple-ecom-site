@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { useProductId } from '@/hooks/compute';
 import { useFetchProductDetail } from '@/apis/product';
+import LoadingBar from '@/components/loading-bar';
+import ProductCard from '@/components/product-card';
+import PageTitle from '@/components/page-title';
+import '@/css/product-details-page.scss';
 
 
 //////////////////////// "REACT COMPONENT" FUNCTIONS ////////////////////////
@@ -20,19 +24,22 @@ const ProductDetails = () => {
 
   return (
     <>
-      {loading && <span className='loading'>Loading product...</span>}
+      {loading && <LoadingBar>Loading product...</LoadingBar>}
       {product && (
-        <div>
-          <h1>{product.id} {product.title}</h1>
-          <p>{product.price}</p>
-          <p>{product.description}</p>
-          <p>{product.discountPercentage}</p>
-          <p>{product.rating}</p>
-          <p>{product.stock}</p>
-          <p>{product.brand}</p>
-          <p>{product.category}</p>
-          <p>{product.thumbnail}</p>
-          <p>{product.images}</p>
+        <div className='container'>
+          <PageTitle title={product?.title || ''} />
+          <div className='product-details-page'>
+            <div>
+                <div className='product-images-carousel'>
+                  {product.images?.map?.((image, index) => (
+                    <img key={index} src={image} alt={product.title} />
+                  ))}
+                </div>
+            </div>
+            <div>
+              <ProductCard product={product} showThumbnail={false} />
+            </div>
+          </div>
         </div>
       )}
     </>
