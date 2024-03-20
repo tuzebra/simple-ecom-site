@@ -1,3 +1,6 @@
+
+import { useState } from 'react';
+
 import ProductList        from '@/page-elements/product-list';
 import ProductSearch      from '@/page-elements/product-search';
 import ProductDetails     from '@/page-elements/product-details';
@@ -5,6 +8,7 @@ import NotFoundPage       from '@/page-elements/notfound';
 import MainHeader         from '@/page-elements/header';
 
 import { usePathname    } from '@/hooks/compute';
+import { GlobalContext, globalContextStateDefault, type GlobalContextStateType  } from '@/state';
 
 import {
   PATH_PAGE__HOME,
@@ -25,14 +29,16 @@ const App = () => {
 
   const IS_NOT_FOUND = !IS_PRODUCT_LIST && !IS_PRODUCT_SEARCH && !IS_PRODUCT_DETAILS;
 
+  const globalContextDefaultValue = useState<GlobalContextStateType>(globalContextStateDefault);
+
   return (
-    <>
+    <GlobalContext.Provider value={globalContextDefaultValue} >
       <MainHeader />
       {IS_NOT_FOUND       && <NotFoundPage />}
       {IS_PRODUCT_LIST    && <ProductList />}
       {IS_PRODUCT_SEARCH  && <ProductSearch />}
       {IS_PRODUCT_DETAILS && <ProductDetails />}
-    </>
+    </GlobalContext.Provider>
   );
 }
 

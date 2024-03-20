@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { usePage, useTotalPage, useCategoryId } from '@/hooks/compute';
 import { capitalizeWords } from '@/utils/string';
 import { useFetchProducts } from '@/apis/product';
+import { useGlobalState, type GlobalContextStateType, type GlobalContextStateUpdate } from '@/state';
 import ListProductCards from '@/page-elements/list-product-cards';
 import PageTitle from '@/components/page-title';
 import '@/css/product.scss';
@@ -28,6 +29,9 @@ const ProductList = () => {
   useEffect(() => {
     executePage(page);
   }, [page, executePage]);
+
+  const [globalState, setGlobalState] = useGlobalState() as [GlobalContextStateType, GlobalContextStateUpdate];
+  console.log('globalState', globalState);
 
   return (
     <>
