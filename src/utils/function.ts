@@ -1,9 +1,9 @@
 export const once = (fn: ()=>void) => {
-  let hasBeenCalled = false
+  let hasBeenCalled = false;
 
   return function () {
-    if(hasBeenCalled)return
-    hasBeenCalled = true
-    fn.apply(null)
+    if(hasBeenCalled)return;
+    hasBeenCalled = true;
+    fn.apply(null);
   }
 }

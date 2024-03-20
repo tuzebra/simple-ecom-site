@@ -3,25 +3,30 @@
 // the url change caused by the user clicking the back or forward button in the browser
 // or by calling the "goto" function
 
-import { once } from '../utils/function'
+import { once } from '../utils/function';
 
 type URLSubscriberHandlerFunction = (url: URL) => void;
-const subscribers: URLSubscriberHandlerFunction[] = [];
-
-// run this listener only once, globally
-once(() => {
-  window.addEventListener('popstate', () => {
-    console.log('popstate here');
-    _triggerAllSubscribers();
-  });
-})();
+type URLSubscriberRecord = {
+  [key: string]: URLSubscriberHandlerFunction;
+}
+const subscribers: URLSubscriberRecord = {};
 
 export const onUrlChange = (subscriber: URLSubscriberHandlerFunction) => {
-  subscribers.push(subscriber);
+
+  // generate a unique id for the subscriber
+  const id = Math.random().toString(36).substring(7);
+  subscribers[id] = subscriber;
+
+  // need to return a function to unsubscribe
+  return () => {
+    delete subscribers[id];
+  }
 }
 
+export const getCurrentUrl = (): URL => new URL(window.location.href);
+
 export const goto = (url: string) => {
-  window.history.pushState(null, '', url)
+  window.history.pushState(null, '', url);
   _triggerAllSubscribers();
 }
 
@@ -33,8 +38,16 @@ export const isSamePath = (href1: string, href2: string): boolean => {
 
 // private function to trigger all subscribers
 const _triggerAllSubscribers = () => {
-  subscribers.forEach(subscriber => subscriber(new URL(window.location.href)));
+  const currentUrl = getCurrentUrl();
+  Object.values(subscribers).forEach(
+    (subscriber) => subscriber(currentUrl)
+  );
 }
+
+// run this listener only once, globally
+once(() => {
+  window.addEventListener('popstate', _triggerAllSubscribers);
+})();
 
 interface Window {
   goto: (url: string) => void;
