@@ -1,4 +1,4 @@
-import { useCallback                  } from 'react';
+import { useState, useCallback        } from 'react';
 import Link                             from '@/components/link';
 import { useQuery, usePathname        } from '@/hooks/compute';
 import { useFetchCategories           } from '@/apis/category';
@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 
 const MainHeader = () => {
   const query = useQuery();
+  const [inputSearchValue, setInputSearchValue] = useState(query);
 
   const {loading, response, execute} = useFetchCategories();
 
@@ -25,21 +26,25 @@ const MainHeader = () => {
     [execute]
   );
 
+  useEffect(
+    () => setInputSearchValue(query),
+    [query]
+  );
+
   const categories = response?.data || [];
+
+  const onInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputSearchValue(event.target.value);
+  },
+  []);
 
   const onSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(event.nativeEvent.target instanceof HTMLFormElement){
-      const input = event.nativeEvent.target.querySelector('input');
-      if(input){
-        const value = input.value.trim();
-        if(value){
-          goto(`${PATH_PAGE__SEARCH}?q=${encodeURIComponentFix(value)}`);
-        }
-      }
+    if(inputSearchValue){
+      goto(`${PATH_PAGE__SEARCH}?q=${encodeURIComponentFix(inputSearchValue)}`);
     }
   },
-  []);
+  [inputSearchValue]);
 
   return (
     <header>
@@ -57,7 +62,7 @@ const MainHeader = () => {
       </nav>
       <div id="search-box">
         <form onSubmit={onSubmit}>
-          <input type="text" placeholder="Search..." defaultValue={query} />
+          <input type="text" placeholder="Search..." value={inputSearchValue} onChange={onInputChange} />
         </form>
       </div>
     </header>

@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useUrl } from '@/hooks/router';
 import { matchUrl } from '@/utils/string';
 import { type PaginationResponseData } from '@/apis/common';
-import { PATH_PAGE__CATEGORY } from '@/const';
+import { PATH_PAGE__CATEGORY, PATH_PAGE__PRODUCT_DETAIL } from '@/const';
 
 
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
@@ -26,6 +26,16 @@ export const useCategoryId = (): string => {
   const [url] = useUrl();
   const {category_id: categoryId = ''} = matchUrl(url.pathname, PATH_PAGE__CATEGORY);
   return categoryId;
+}
+
+/**
+ * Custom hook to retrieve the current product ID from the URL.
+ * @returns The current product ID.
+ */
+export const useProductId = (): string => {
+  const [url] = useUrl();
+  const {product_id: productId = ''} = matchUrl(url.pathname, PATH_PAGE__PRODUCT_DETAIL);
+  return productId;
 }
 
 /**

@@ -10,6 +10,7 @@ import { formatUrl } from '@/utils/string';
 
 //////////////////////// CONFIGS ////////////////////////
 
+const API_GET_PRODUCT_SINGLE = '/products/:product_id';
 const API_GET_PRODUCTS_ALL = '/products';
 const API_GET_PRODUCTS_OF_A_CATEGORY = '/products/category/:category_id';
 const API_SEARCH_PRODUCTS = '/products/search';
@@ -31,20 +32,21 @@ export type Product = {
   images?: string[]; // array of string values of the image urls
 };
 
-type ProductFetchResponseData = PaginationResponseData & {
+type ProductsFetchResponseData = PaginationResponseData & {
   products: Product[];
 }
+type ProductFetchResponseData = Product;
 
 type UseFetchProductsExecutePageFunction = (page: number) => void;
 type UseFetchProductsExecuteSearchPageFunction = (query: string, page: number) => void;
 
-type UseFetchProductsReturnType = UseCacheFetchReturnType<ProductFetchResponseData> & {
+type UseFetchProductsReturnType = UseCacheFetchReturnType<ProductsFetchResponseData> & {
   executePage: UseFetchProductsExecutePageFunction;
 };
-type UseSearchProductsReturnType = UseCacheFetchReturnType<ProductFetchResponseData> & {
+type UseSearchProductsReturnType = UseCacheFetchReturnType<ProductsFetchResponseData> & {
   executeSearchPage: UseFetchProductsExecuteSearchPageFunction;
 };
-
+type UseFetchProductDetailReturnType = UseCacheFetchReturnType<ProductFetchResponseData>;
 
 //////////////////////// "HOOK" FUNCTIONS ////////////////////////
 
@@ -60,7 +62,7 @@ export const useFetchProducts = ({categoryId = ''}): UseFetchProductsReturnType 
       : API_GET_PRODUCTS_ALL
     }`;
 
-  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductFetchResponseData>(fetchUrl);
+  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductsFetchResponseData>(fetchUrl);
 
   /**
    * Executes the fetch for a specific page of products.
@@ -85,7 +87,8 @@ export const useFetchProducts = ({categoryId = ''}): UseFetchProductsReturnType 
 }
 
 export const useSearchProducts = (): UseSearchProductsReturnType => {
-  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductFetchResponseData>(`${API_ENDPOINT}${API_SEARCH_PRODUCTS}`);
+  const fetchUrl = `${API_ENDPOINT}${API_SEARCH_PRODUCTS}`;
+  const {loading, response, execute, wrongAssumption} = useCacheFetch<ProductsFetchResponseData>(fetchUrl);
 
   /**
    * Executes the fetch for a specific page of products.
@@ -108,6 +111,11 @@ export const useSearchProducts = (): UseSearchProductsReturnType => {
   }, [execute]);
 
   return {loading, response, execute, executeSearchPage, wrongAssumption};
+}
+
+export const useFetchProductDetail = (productId: string): UseFetchProductDetailReturnType => {
+  const fetchUrl = formatUrl(`${API_ENDPOINT}${API_GET_PRODUCT_SINGLE}`, {product_id: productId});
+  return useCacheFetch<ProductFetchResponseData>(fetchUrl);
 }
 
 

@@ -7,5 +7,7 @@ interface ImportMetaEnv {
 
   readonly VITE_PATH_PAGE__HOME: string;
   readonly VITE_PATH_PAGE__SEARCH: string;
+  readonly PATH_PAGE_PAGE__CATEGORY: string;
+  readonly VITE_PATH_PAGE__PRODUCT_DETAIL: string;
   readonly VITE_PATH_PAGE__CART: string;
 }
