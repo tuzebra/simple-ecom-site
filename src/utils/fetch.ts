@@ -21,6 +21,13 @@ export type FetchResponse<DataType> = {
 
 export type ResolveFunction = (value: unknown) => void;
 
+export type FetchMiddlewareReturn<ExpectedDataType> = {
+  override: boolean,
+  response?: FetchResponse<ExpectedDataType>,
+};
+
+type cacheFetchMiddlewareFunction<ExpectedDataType> = (url: string, options: CacheRequestInit) => Promise<FetchMiddlewareReturn<ExpectedDataType>>;
+
 
 //////////////////////// SCOPED VARIABLES ////////////////////////
 
@@ -29,8 +36,19 @@ const cacheGETResponseByUrl: {[url: string]: FetchResponse<unknown>} = {};
 
 const fetchingPromise: {[url: string]: ResolveFunction[]} = {};
 
+const middlewares: cacheFetchMiddlewareFunction<unknown>[] = [];
+
 
 //////////////////////// FUNCTIONS ////////////////////////
+
+/**
+ * Adds a fetch middleware function to the list of middlewares.
+ * @param middleware - The fetch middleware function to add.
+ * @template ExpectedDataType - The expected data type of the middleware.
+ */
+export const addFetchMiddleware = <ExpectedDataType>(middleware: cacheFetchMiddlewareFunction<ExpectedDataType>) => {
+  middlewares.push(middleware as cacheFetchMiddlewareFunction<ExpectedDataType>);
+}
 
 /**
  * Converts an object of query options into a query string.
@@ -62,6 +80,14 @@ export const toQueryString = (queryOptions: QueryOptions = {}): string => {
  * @template ExpectedDataType - The expected data type of the fetched data.
  */
 export const cacheFetch = async <ExpectedDataType> (url = '', options: CacheRequestInit = {}): Promise<FetchResponse<ExpectedDataType>> => {
+
+  // support middleware to hook into this function
+  for await(const middleware of middlewares){
+    const { override, response } = await middleware(url, options) as FetchMiddlewareReturn<ExpectedDataType>;
+    if(override && response){
+      return response;
+    }
+  }
 
   const { id = getRandomStringId() } = options;
 
@@ -98,29 +124,29 @@ export const cacheFetch = async <ExpectedDataType> (url = '', options: CacheRequ
 
   // if not cached, then fetch, and create a fetching task
   fetchingPromise[url] = [];
-  const fetchResponse: FetchResponse<ExpectedDataType> = {id, success: false};
+  const response: FetchResponse<ExpectedDataType> = {id, success: false};
   let data: ExpectedDataType;
   try{
     const res = await fetch(url, options);
     data = await res.json() as ExpectedDataType;
     if(data){
-      fetchResponse.data = data;
-      fetchResponse.success = true;
-      fetchResponse.message = 'success';
+      response.data = data;
+      response.success = true;
+      response.message = 'success';
     }
   }
   catch(error){
-    fetchResponse.message = 'Error!';
-    fetchResponse.error = error;
+    response.message = 'Error!';
+    response.error = error;
   }
 
-  cacheGETResponseByUrl[url] = fetchResponse;
+  cacheGETResponseByUrl[url] = response;
 
   // then resolve all the promise was added on the way the fetching task was running
-  fetchingPromise[url].forEach(resolve => resolve(fetchResponse));
+  fetchingPromise[url].forEach(resolve => resolve(response));
 
   // clean up the fetchingPromise
   delete fetchingPromise[url];
 
-  return fetchResponse;
+  return response;
 }
